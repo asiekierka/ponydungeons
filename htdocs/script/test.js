@@ -35,8 +35,8 @@
     
     var animloop = function() {
       for(var i=0;i<10;i++) {
-        if(i<5) g[i].angle+=Math.PI/30;
-        else g[i].angle-=Math.PI/30;
+        if(i<5) g[i].angle+=6;
+        else g[i].angle-=6;
         g[i].x += ((i%5)+1)/10;
         g[i].y += ((i%5)+1)/10;
       }
