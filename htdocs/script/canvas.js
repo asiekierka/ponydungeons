@@ -42,7 +42,7 @@ window.ponydungeons.Canvas = (function (ponydungeons) {
   Canvas.Group.prototype.render = function (cv) {
     cv.ctx.save();
     cv.ctx.translate(this.x, this.y);
-    cv.ctx.rotate(this.angle);
+    cv.ctx.rotate(this.angle * Math.PI / 180);
     cv.ctx.scale(this.scaleX, this.scaleY);
     _.each(this.objects, function (obj) {
       obj.render(cv);
@@ -78,6 +78,9 @@ window.ponydungeons.Canvas = (function (ponydungeons) {
     this.x = x;
     this.y = y;
     this.z = z || 0;
+    this.angle = 0;
+    this.scaleX = 1;
+    this.scaleY = 1;
   };
 
   Canvas.Character.prototype.render = function (cv) {
@@ -86,6 +89,8 @@ window.ponydungeons.Canvas = (function (ponydungeons) {
         row = Math.floor(charCode / 16);
     cv.ctx.save();
     cv.ctx.translate(this.x, this.y);
+    cv.ctx.rotate(this.angle * Math.PI / 180);
+    cv.ctx.scale(this.scaleX, this.scaleY);
     cv.ctx.fillStyle = this.color;
     cv.ctx.font = '12pt Inconsolata, monospace';
     cv.ctx.textAlign = 'center';
