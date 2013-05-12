@@ -17,7 +17,7 @@
   }
 
   function createFluttershy (x, y, z) {
-    var group = new ponydungeons.Canvas.Group(x, y, z), chr;
+    var group = new ponydungeons.Canvas.CachedGroup(x, y, z, 36, 22), chr;
 
     chr = new ponydungeons.Canvas.Character('-', 'rgb(253, 181, 203)', -8, 0);
     group.add(chr);
@@ -45,7 +45,6 @@
       g[j].angle = Math.PI / 3;
       cv.scene.add(g[j]);
     }
-    cv.scene.sort();
     cv.render();
     
     var animloop = function() {
