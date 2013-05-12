@@ -27,6 +27,9 @@
             g[j].add(c);
           }
         }
+        g[0].scaleX = 100;
+        g[0].z = 1;
+        cv.scene.sort();
         cv.render();
         
         var animloop = function() {

@@ -27,13 +27,15 @@ window.ponydungeons.Canvas = (function (ponydungeons) {
   };
 
   // Group class
-  // (x position, y position)
-  Canvas.Group = function (x, y) {
+  // (x position, y position, [z index])
+  Canvas.Group = function (x, y, z) {
     this.x = x;
     this.y = y;
     this.angle = 0;
     this.scaleX = 1;
     this.scaleY = 1;
+    this.z = z || 0;
+
     this.objects = [];
   };
 
@@ -50,6 +52,7 @@ window.ponydungeons.Canvas = (function (ponydungeons) {
 
   Canvas.Group.prototype.add = function (object) {
     this.objects.push(object);
+    this.sort();
   };
 
   Canvas.Group.prototype.remove = function (object) {
@@ -61,13 +64,20 @@ window.ponydungeons.Canvas = (function (ponydungeons) {
     }
   };
 
+  Canvas.Group.prototype.sort = function () {
+    this.objects = _.sortBy(this.objects, function (obj) {
+      return obj.z;
+    });
+  };
+
   // Character class
-  // (displayed character, color, x position, y position)
-  Canvas.Character = function (c, color, x, y) {
+  // (displayed character, color, x position, y position, [z index])
+  Canvas.Character = function (c, color, x, y, z) {
     this.c = c;
     this.color = color;
     this.x = x;
     this.y = y;
+    this.z = z || 0;
   };
 
   Canvas.Character.prototype.render = function (cv) {
