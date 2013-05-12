@@ -31,6 +31,7 @@ window.ponydungeons.Canvas = (function (ponydungeons) {
   Canvas.Group = function (x, y, z) {
     this.x = x;
     this.y = y;
+    // in degrees
     this.angle = 0;
     this.scaleX = 1;
     this.scaleY = 1;
@@ -76,7 +77,9 @@ window.ponydungeons.Canvas = (function (ponydungeons) {
     this.x = x;
     this.y = y;
     this.z = z;
+    // x spans -width/2 to width/2 (i.e. centred about (x,y))
     this.width = width;
+    // ditto for y and height
     this.height = height;
 
     this.cache = document.createElement('canvas');
@@ -87,7 +90,8 @@ window.ponydungeons.Canvas = (function (ponydungeons) {
 
   Canvas.CachedGroup.prototype = new Canvas.Group();
 
-  // Called when width/height/scaleX/scaleY changed
+  // Call when width/height/scaleX/scaleY changed
+  // Invalidates cache
   Canvas.CachedGroup.prototype.update = function () {
     this.cacheCurrent = false;
   };
@@ -98,7 +102,10 @@ window.ponydungeons.Canvas = (function (ponydungeons) {
     ctx.save();
     ctx.translate(this.x, this.y);
     ctx.rotate(this.angle * Math.PI / 180);
+    // Cache invalid
     if (!this.cacheCurrent) {
+      // refresh cache
+      // cache scaled version to prevent blurriness
       this.cache.width = Math.ceil(this.width * this.scaleX);
       this.cache.height = Math.ceil(this.height * this.scaleY);
       cacheCtx = this.cache.getContext('2d');
@@ -133,15 +140,13 @@ window.ponydungeons.Canvas = (function (ponydungeons) {
     this.x = x;
     this.y = y;
     this.z = z || 0;
+    // in degrees
     this.angle = 0;
     this.scaleX = 1;
     this.scaleY = 1;
   };
 
   Canvas.Character.prototype.render = function (cv, ctx) {
-    var charCode = this.c.charCodeAt(0),
-        column = charCode % 16,
-        row = Math.floor(charCode / 16);
     ctx.save();
     ctx.translate(this.x, this.y);
     ctx.rotate(this.angle * Math.PI / 180);
